@@ -1,0 +1,31 @@
+name: TechTrends - Package with Docker
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    
+steps:
+  - name: Checkout code
+    uses: actions/checkout@v2
+
+  - name: Set up Docker Buildx
+    uses: docker/setup-buildx-action@v1
+
+  - name: Login to Docker Hub
+    uses: docker/login-action@v2
+    with:
+      username: ${{ secrets.jayshinoda99 }}
+      password: ${{ secrets.dckr_pat_mDq2EuLNzWGEiaNVbooyXpArdG4 }}
+
+  - name: Build and push Docker image
+    uses: docker/build-push-action@v2
+    with:
+      context: .
+      file: ./Dockerfile
+      push: true
+      tags: jayshinoda99/techtrends:latest
